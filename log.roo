@@ -1,0 +1,10 @@
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-08-21 09:18:37
+project --topLevelPackage au.gov.nsw.records.digitalarchive.helper --projectName WorkflowDesigner --java 6 --packaging WAR
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2012-08-21 09:18:38
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-08-21 09:18:42
+persistence setup --database HYPERSONIC_IN_MEMORY --provider HIBERNATE 
+entity jpa --class au.gov.nsw.records.digitalarchive.helper.model.WorkflowDesign
+web mvc setup
+web mvc scaffold --class ~.web.WorkflowDesignController
+security setup
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2012-08-22 14:25:10

@@ -1,0 +1,158 @@
+<div xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+  <spring:message var="app_name" code="application_name" htmlEscape="false" />
+  <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false" />
+  <util:panel id="title" title="${title}">
+    <h3>
+      <spring:message code="welcome_h3" arguments="${app_name}" />
+    </h3>
+    <p>
+      What's up dude?
+    </p>
+
+    <script type="text/javascript">
+
+			$( init );
+			
+			var id = 0;
+			var actions = ['fileMove', 'fileDelete', 'fileCopy', 'sleep', 'clamScan', 'sumCheck', 'tikaMetadata', 'exifMetadata', 'droidIdentification', 'xenaIdentification', 'tikaIdentification', 'notification' , 'preservation', 'repository'];
+			
+			function init() {
+				for (var i in actions) {
+					  $('#control').append('<div id="makeMeDraggable" class="button white" data="' + actions[i] + '"> ' + actions[i] + ' </div>');
+				}
+				 
+			  $('.button').draggable( {
+			    cursor: 'pointer',
+			    helper: myHelper
+			  } );
+			  			  
+			  $('#actionDrop').droppable( {
+				    greedy: true,
+						drop: handleDropEvent,
+				  } );
+			  
+			  $('#actionSetDrop').droppable( {
+						drop: handleDropEvent,
+			  } );
+		  
+			  $( "#actionDrop" ).sortable({
+					connectWith: ".listitem",
+					handle : '.handle'
+				});  
+				
+			  //$( "#actionSetDrop" ).sortable({
+				//	connectWith: ".listitem",
+					//handle : '.handle'
+				//});
+			  
+			}
+			
+			function myHelper( event ) {
+			  return '<div id="draggableHelper" class='button white'>drag to the place!</div>';
+			}
+			
+			function getOptionPanel(){
+				return '<span class="alignright surrondedborder"><img src="/WorkflowDesigner/resources/images/shape_ungroup.png" class="handle"/> <img src="/WorkflowDesigner/resources/images/cog_edit.png" class="modifyable"/> <img src="/WorkflowDesigner/resources/images/tab_delete.png" class="deleteable"/> </span>';
+			}
+			
+			
+			function handleDropEvent( event, ui ) {
+				 var draggable = ui.draggable;
+				 var droppable = ui.droppable;
+				 if (draggable.attr('data') != null){
+					 if (draggable.attr('data') == 'actionSet'){
+						 	newId = id++;
+						  $('<ul id="actionDrop' + newId + '" class="listitem grey ui-droppable ui-sortable"><li >[action set ' + newId + getOptionPanel() + ']</li></ul>').appendTo('#actionSetDrop');
+						 	
+						 	$('#actionDrop' + newId ).droppable( {
+						 		greedy: true,
+						 		drop: handleDropEvent
+					  	} );
+						 	
+						 	$( "#actionDrop" + newId ).sortable({
+								connectWith: ".listitem",
+								handle : '.handle'
+							}); 
+						 	
+						 	$('.deleteable').click( function(){
+							  	$(this).closest('ul').fadeOut(300, function(){ $(this).closest('ul').remove();});
+							 } );
+						 	
+					   }else if (draggable.attr('data') == 'errorActionSet'){
+						   newId = id++;
+							  $('<ul id="actionDrop' + newId + '" style="margin-left: 10em;" class="sublistitem orange ui-droppable ui-sortable"><li >[error action set ' + newId + getOptionPanel() + ']</li></ul>').appendTo('#actionSetDrop');
+							 	
+							 	$('#actionDrop' + newId ).droppable( {
+							 		greedy: true,
+							 		drop: handleDropEvent
+						  	} );
+							 	
+							 	$( "#actionDrop" + newId ).sortable({
+									connectWith: ".listitem",
+									handle : '.handle'
+								}); 
+							 	
+							 	$('.deleteable').click( function(){
+								  	$(this).closest('ul').fadeOut(300, function(){ $(this).closest('ul').remove();});
+								 } );
+						 } else {  
+							 newId = id++;
+							 var toggleContent = '<div class="foldme"><br/><form> \
+								Action name: <input type="text" name="name" /><br /> \
+								Path: <input type="text" name="path" /> \
+								</form><br/></div>';
+						  //alert("Handler for .click() called." + $(this).text() );
+						  $(this).closest('ul').append('<li class="listitem plain">' + draggable.attr('data') + getOptionPanel() + toggleContent +' </li>');
+						  // initially not shown
+						  $('.foldme').toggle(false);
+						  
+						  $('.modifyable').click( function(){
+							    //alert("Handler for .click() called." + $(this).closest('li').text() );
+							    $('.foldme').toggle();
+							   //$("#edit").load("process-sortable?"+order);
+							 } );
+						  
+						  $('.deleteable').click( function(){
+						  	$(this).closest('li').fadeOut(300, function(){ $(this).closest('li').remove();});
+						  } );
+					 }
+				 }
+			}
+			
+		</script>
+		  
+			ActionSet <br/>
+			<div id="actionSet" class="button white" data="actionSet"> ActionSet </div>
+			<div id="actionSet" class="button orange" data="errorActionSet"> Error ActionSet </div>
+			<div> 
+		   </div>
+			<div id="control">Actions <br/></div>
+			
+			<div> 
+			  <br/> 
+			  <form>
+			     <span class="alignright">
+			      Preset
+			      <select name="preset">
+							<option value="virusCheck">Virus Check Only</option>
+							<option value="quick">Quick</option>
+							<option value="noPreservation">No Preservation</option>
+							<option value="straightToRepository">Straight To Repository</option>
+						</select>
+			  	</span>
+			  </form>
+			  <br/> 
+			  <br/>
+			</div>
+			
+			<div id="actionSetDrop" class="listitem plain">
+			  [Workflow Name]
+				
+			</div>
+			<div> <br/> </div>
+			<form><span class="alignright"><input type="submit" value="Submit" /></span></form>
+			<form><span class="alignright"><input type="Submit" value="Save as preset" /></span></form>
+  </util:panel>
+</div>

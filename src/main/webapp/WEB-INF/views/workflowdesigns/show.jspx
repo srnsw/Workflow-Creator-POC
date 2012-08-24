@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_au_gov_nsw_records_digitalarchive_helper_model_WorkflowDesign" object="${workflowdesign}" path="/workflowdesigns" z="RUJ04F+ar5JjBECzl4YOw1bsSa0=">
+        <field:display field="name" id="s_au_gov_nsw_records_digitalarchive_helper_model_WorkflowDesign_name" object="${workflowdesign}" z="X8sgjHCQzqutvPBcUuGvQe/aIAs="/>
+        <field:display field="xml" id="s_au_gov_nsw_records_digitalarchive_helper_model_WorkflowDesign_xml" object="${workflowdesign}" z="p9SHXUCOd7Om8kxzlQFgUp9/p0k="/>
+        <field:display field="owner" id="s_au_gov_nsw_records_digitalarchive_helper_model_WorkflowDesign_owner" object="${workflowdesign}" z="VumKuvdBtWoTYBDChryGtxkISvo="/>
+    </page:show>
+</div>
